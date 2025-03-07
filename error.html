@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error {{code}}</title>
+    <title>Error</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,9 +30,28 @@
 </head>
 <body>
     <div class="error-container">
-        <h1>Error {{code}}</h1>
-        <p>{{message}}</p>
+        <h1>Error <span id="error-code"></span></h1>
+        <p id="error-message"></p>
         <p><a href="/">Go Home</a></p>
     </div>
+
+    <script>
+        var params = new URLSearchParams(window.location.search);
+        var errorCode = params.get("status") || "Unknown";
+
+        var errorMessages = {
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "403": "Forbidden",
+            "404": "Page Not Found",
+            "500": "Internal Server Error",
+            "502": "Bad Gateway",
+            "503": "Service Unavailable",
+            "504": "Gateway Timeout"
+        };
+
+        document.getElementById("error-code").innerText = errorCode;
+        document.getElementById("error-message").innerText = errorMessages[errorCode] || "An unexpected error occurred.";
+    </script>
 </body>
 </html>
